@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,7 +7,6 @@
 <meta name="theme-color" content="#100b0b">
 
 <title>PORTAL DO MAGO | Carta do Dia</title>
-
 <meta name="description" content="Portal do Mago - Descubra sua carta do dia e receba uma mensagem e um conselho especial.">
 
 <style>
@@ -18,15 +18,12 @@
 
 body {
     min-height: 100vh;
-    background:
-      radial-gradient(ellipse at top, #38200f 0%, #160e0b 45%, #080707 100%);
+    background: radial-gradient(ellipse at top, #38200f 0%, #160e0b 45%, #080707 100%);
     color: #f5dfaa;
     font-family: Georgia, 'Times New Roman', serif;
     text-align: center;
     overflow-x: hidden;
 }
-
-/* CABEÇALHO */
 
 header {
     padding: 35px 15px 15px;
@@ -52,8 +49,6 @@ header .subtitulo {
     background: linear-gradient(to right, transparent, #d6a54e, transparent);
     margin: 23px auto;
 }
-
-/* CONTEÚDO */
 
 .container {
     width: 100%;
@@ -103,9 +98,7 @@ header .subtitulo {
     border-radius: 12px;
     overflow: hidden;
     border: 2px solid #bd9146;
-    box-shadow:
-      0 0 15px #c28a32,
-      0 0 35px rgba(189,145,70,.25);
+    box-shadow: 0 0 15px #c28a32, 0 0 35px rgba(189,145,70,.25);
     background: #17100c;
 }
 
@@ -142,7 +135,7 @@ header .subtitulo {
     transform: scale(1.04);
 }
 
-/* MENSAGEM */
+/* RESULTADO */
 
 .resultado {
     display: none;
@@ -190,7 +183,7 @@ header .subtitulo {
     margin-top: 20px;
 }
 
-/* WIDGET DO HORÓSCOPO */
+/* HORÓSCOPO VIRTUAL */
 
 #widget-horoscopo {
     width: 100%;
@@ -211,8 +204,6 @@ footer {
     letter-spacing: 1px;
 }
 
-/* ANIMAÇÃO */
-
 @keyframes aparecer {
     from {
         opacity: 0;
@@ -224,10 +215,9 @@ footer {
     }
 }
 
-/* CELULARES */
+/* CELULAR */
 
 @media(max-width: 480px) {
-
     header {
         padding-top: 28px;
     }
@@ -258,16 +248,12 @@ footer {
         font-size: 16px;
     }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- CABEÇALHO -->
-
 <header>
-
     <h1>✦ PORTAL DO MAGO ✦</h1>
 
     <div class="subtitulo">
@@ -275,10 +261,7 @@ footer {
     </div>
 
     <div class="linha"></div>
-
 </header>
-
-<!-- CARTA DO DIA -->
 
 <main class="container">
 
@@ -293,30 +276,21 @@ footer {
 
         <div class="carta" id="carta">
 
-            <!-- VERSO DA CARTA -->
-
             <div class="lado verso">
-                <img id="imagemVerso"
-                     alt="Verso da carta">
+                <img id="imagemVerso" alt="Verso da carta">
             </div>
 
-            <!-- FRENTE DA CARTA -->
-
             <div class="lado frente">
-                <img id="imagemFrente"
-                     alt="Carta sorteada">
+                <img id="imagemFrente" alt="Carta sorteada">
             </div>
 
         </div>
-
     </div>
 
     <button class="botao" id="botao"
             onclick="revelarCarta()">
         ✨ REVELAR MINHA CARTA ✨
     </button>
-
-    <!-- RESULTADO -->
 
     <section class="resultado" id="resultado">
 
@@ -335,18 +309,11 @@ footer {
 
 </main>
 
-<!-- =================================
-     HORÓSCOPO VIRTUAL
-     POSIÇÃO MARCADA COM X
-================================== -->
+<!-- HORÓSCOPO VIRTUAL -->
 
 <div id="widget-horoscopo">
-
     <script async src="https://widget.horoscopovirtual.com.br/js/horoscopo.js?background=080707&color=e8bd62&border=e8bd62&text=e8bd62&font=roboto"></script>
-
 </div>
-
-<!-- RODAPÉ -->
 
 <footer>
     ✦ PORTAL DO MAGO ✦
@@ -357,10 +324,15 @@ footer {
 <script>
 
 /* ===================================
-   CONFIGURAÇÃO DAS CARTAS
+   IMAGENS NA RAIZ DO GITHUB
 =================================== */
 
-const pastaCartas = "cartas/";
+/* IMPORTANTE:
+   Não existe mais a pasta cartas/.
+   Todas as imagens estão junto do index.html.
+*/
+
+const pastaCartas = "";
 
 const extensoes = [
     ".png",
@@ -671,13 +643,9 @@ function sortearCarta() {
         historico = [];
     }
 
-    /* Evita repetição até completar as 36 */
-
     let disponiveis = cartas.filter(
         carta => !historico.includes(carta.arquivo)
     );
-
-    /* Quando todas saírem, começa novo ciclo */
 
     if (disponiveis.length === 0) {
         historico = [];
@@ -708,7 +676,6 @@ function carregarCartaDoDia() {
     const hoje = dataAtual();
 
     const dataSalva = localStorage.getItem(chaveData);
-
     const cartaSalva = localStorage.getItem(chaveCarta);
 
     if (dataSalva === hoje && cartaSalva) {
@@ -833,7 +800,7 @@ function iniciarPortal() {
 
     carregarCartaDoDia();
 
-    /* Mostra o verso */
+    /* Mostra o verso da carta */
 
     carregarImagem(
         document.getElementById("imagemVerso"),
