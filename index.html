@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100b0b">
+
+<title>PORTAL DO MAGO | Carta do Dia</title>
+
+<meta name="description" content="Portal do Mago - Descubra sua carta do dia e receba uma mensagem e um conselho especial.">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at top, #38200f 0%, #160e0b 45%, #080707 100%);
+    color: #f5dfaa;
+    font-family: Georgia, 'Times New Roman', serif;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* CABEÇALHO */
+
+header {
+    padding: 35px 15px 15px;
+}
+
+header h1 {
+    color: #e8bd62;
+    font-size: clamp(30px, 7vw, 55px);
+    letter-spacing: 5px;
+    text-shadow: 0 0 15px #b77a24;
+}
+
+header .subtitulo {
+    margin-top: 12px;
+    font-size: clamp(17px, 4vw, 25px);
+    letter-spacing: 4px;
+    color: #fff0c5;
+}
+
+.linha {
+    width: 180px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #d6a54e, transparent);
+    margin: 23px auto;
+}
+
+/* CONTEÚDO */
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    padding: 10px 18px 40px;
+}
+
+.instrucao {
+    font-size: 17px;
+    color: #e6c98f;
+    margin: 12px 0 25px;
+    line-height: 1.6;
+}
+
+/* CARTA */
+
+.area-carta {
+    perspective: 1200px;
+    width: min(76vw, 290px);
+    height: min(112vw, 440px);
+    max-height: 440px;
+    margin: 0 auto 25px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.carta {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s ease;
+}
+
+.carta.virada {
+    transform: rotateY(180deg);
+}
+
+.lado {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #bd9146;
+    box-shadow:
+      0 0 15px #c28a32,
+      0 0 35px rgba(189,145,70,.25);
+    background: #17100c;
+}
+
+.lado img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.frente {
+    transform: rotateY(180deg);
+}
+
+/* BOTÃO */
+
+.botao {
+    display: inline-block;
+    border: 1px solid #d5a84f;
+    padding: 13px 30px;
+    border-radius: 30px;
+    color: #ffe2a2;
+    background: linear-gradient(135deg, #75451c, #241309);
+    font-size: 16px;
+    font-family: Georgia, serif;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(215,167,74,.25);
+    transition: .3s;
+}
+
+.botao:hover {
+    background: linear-gradient(135deg, #a66c29, #4b260e);
+    box-shadow: 0 0 22px #b77a24;
+    transform: scale(1.04);
+}
+
+/* MENSAGEM */
+
+.resultado {
+    display: none;
+    margin: 28px auto 0;
+    padding: 25px 20px;
+    border: 1px solid rgba(212,169,91,.65);
+    border-radius: 14px;
+    background: rgba(24,14,9,.85);
+    box-shadow: 0 0 25px rgba(192,133,43,.15);
+    animation: aparecer 1s ease;
+}
+
+.resultado h2 {
+    color: #e8bd62;
+    font-size: 30px;
+    margin-bottom: 17px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.resultado .mensagem {
+    color: #fff0d0;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.conselho {
+    border-top: 1px solid #92703b;
+    padding-top: 18px;
+    color: #eac779;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.conselho strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 19px;
+}
+
+.data {
+    font-size: 13px;
+    color: #bda77f;
+    margin-top: 20px;
+}
+
+/* WIDGET DO HORÓSCOPO */
+
+#widget-horoscopo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 18px;
+    padding: 0 12px;
+    text-align: center;
+}
+
+/* RODAPÉ */
+
+footer {
+    padding: 25px 15px;
+    color: #a68a5e;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* ANIMAÇÃO */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* CELULARES */
+
+@media(max-width: 480px) {
+
+    header {
+        padding-top: 28px;
+    }
+
+    header h1 {
+        letter-spacing: 3px;
+    }
+
+    .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .instrucao {
+        font-size: 15px;
+    }
+
+    .resultado {
+        padding: 20px 15px;
+    }
+
+    .resultado h2 {
+        font-size: 25px;
+    }
+
+    .resultado .mensagem,
+    .conselho {
+        font-size: 16px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- CABEÇALHO -->
+
+<header>
+
+    <h1>✦ PORTAL DO MAGO ✦</h1>
+
+    <div class="subtitulo">
+        CARTA DO DIA
+    </div>
+
+    <div class="linha"></div>
+
+</header>
+
+<!-- CARTA DO DIA -->
+
+<main class="container">
+
+    <p class="instrucao" id="instrucao">
+        Concentre seus pensamentos e toque na carta
+        para revelar a mensagem que o universo reserva
+        para você hoje.
+    </p>
+
+    <div class="area-carta" id="areaCarta"
+         onclick="revelarCarta()">
+
+        <div class="carta" id="carta">
+
+            <!-- VERSO DA CARTA -->
+
+            <div class="lado verso">
+                <img id="imagemVerso"
+                     alt="Verso da carta">
+            </div>
+
+            <!-- FRENTE DA CARTA -->
+
+            <div class="lado frente">
+                <img id="imagemFrente"
+                     alt="Carta sorteada">
+            </div>
+
+        </div>
+
+    </div>
+
+    <button class="botao" id="botao"
+            onclick="revelarCarta()">
+        ✨ REVELAR MINHA CARTA ✨
+    </button>
+
+    <!-- RESULTADO -->
+
+    <section class="resultado" id="resultado">
+
+        <h2 id="nomeCarta"></h2>
+
+        <p class="mensagem" id="mensagem"></p>
+
+        <div class="conselho">
+            <strong>✦ CONSELHO DO DIA ✦</strong>
+            <span id="conselho"></span>
+        </div>
+
+        <p class="data" id="data"></p>
+
+    </section>
+
+</main>
+
+<!-- =================================
+     HORÓSCOPO VIRTUAL
+     POSIÇÃO MARCADA COM X
+================================== -->
+
+<div id="widget-horoscopo">
+
+    <script async src="https://widget.horoscopovirtual.com.br/js/horoscopo.js?background=080707&color=e8bd62&border=e8bd62&text=e8bd62&font=roboto"></script>
+
+</div>
+
+<!-- RODAPÉ -->
+
+<footer>
+    ✦ PORTAL DO MAGO ✦
+    <br><br>
+    Que a sabedoria ilumine seus caminhos.
+</footer>
+
+<script>
+
+/* ===================================
+   CONFIGURAÇÃO DAS CARTAS
+=================================== */
+
+const pastaCartas = "cartas/";
+
+const extensoes = [
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp"
+];
+
+
+/* ===================================
+   MENSAGENS DAS 36 CARTAS
+=================================== */
+
+const cartas = [
+
+{
+nome: "Jardim",
+arquivo: "jardim",
+mensagem: "O Jardim anuncia encontros, convites, amizades e oportunidades que podem surgir através da convivência com outras pessoas. Hoje, sua energia está voltada para a comunicação e para a expansão dos seus contatos. Não se esconda do mundo: uma conversa ou aproximação pode abrir uma porta importante.",
+conselho: "Permita-se estar entre pessoas, compartilhar suas ideias e aceitar convites. Uma oportunidade pode chegar por meio de alguém que você ainda não percebeu."
+},
+
+{
+nome: "Lírios",
+arquivo: "lirios",
+mensagem: "Os Lírios representam paz, maturidade, sabedoria e equilíbrio. Esta carta anuncia um momento em que a serenidade será mais poderosa do que qualquer discussão. Assuntos que pareciam confusos podem encontrar seu caminho quando você age com paciência.",
+conselho: "Não permita que a pressa roube sua tranquilidade. Escolha a sabedoria em vez do conflito e preserve aquilo que traz paz ao seu coração."
+},
+
+{
+nome: "Livro",
+arquivo: "livro",
+mensagem: "O Livro fala de segredos, conhecimentos, descobertas e informações que ainda não chegaram completamente até você. Algo pode estar sendo revelado aos poucos. É um excelente momento para estudar, pesquisar e prestar atenção aos detalhes.",
+conselho: "Não tire conclusões antes de conhecer toda a história. Observe, aprenda e permita que a verdade se revele no momento certo."
+},
+
+{
+nome: "Lua",
+arquivo: "lua",
+mensagem: "A Lua simboliza intuição, reconhecimento, sensibilidade e emoções profundas. Sua percepção pode estar especialmente aguçada hoje. Também é uma carta ligada à valorização pessoal e ao reconhecimento dos seus talentos.",
+conselho: "Confie na sua sensibilidade, mas não confunda medo com intuição. Reconheça seu próprio valor e não dependa exclusivamente da aprovação dos outros."
+},
+
+{
+nome: "Montanha",
+arquivo: "montanha",
+mensagem: "A Montanha representa obstáculos, atrasos e desafios que exigem força e persistência. Nem tudo acontecerá no ritmo desejado, mas isso não significa que seu caminho esteja fechado. Existe uma lição importante na maneira como você enfrenta as dificuldades.",
+conselho: "Não desista diante do primeiro impedimento. Divida os grandes desafios em pequenas etapas e avance com determinação."
+},
+
+{
+nome: "Mulher",
+arquivo: "mulher",
+mensagem: "A carta da Mulher representa uma figura feminina importante, a energia receptiva, a sensibilidade e a capacidade de perceber o que acontece ao redor. Pode indicar uma mulher que terá influência nos acontecimentos do dia.",
+conselho: "Valorize sua intuição e observe as atitudes das pessoas. Se uma mulher importante faz parte da sua situação, procure compreender sua participação antes de tomar decisões."
+},
+
+{
+nome: "Navio",
+arquivo: "navio",
+mensagem: "O Navio anuncia movimento, viagens, mudanças e novas possibilidades. Algo que estava distante pode começar a se aproximar. A carta também fala de crescimento e de coragem para abandonar situações que já não combinam com seus objetivos.",
+conselho: "Não tenha medo de mudar de direção. Prepare-se para novas experiências e não fique preso ao que já cumpriu seu papel."
+},
+
+{
+nome: "Pássaros",
+arquivo: "passaros",
+mensagem: "Os Pássaros representam conversas, notícias, encontros e movimentações. Uma comunicação importante pode acontecer, trazendo esclarecimentos ou novas perspectivas. A carta também alerta para a ansiedade e para o excesso de preocupações.",
+conselho: "Converse com clareza, escute antes de responder e não permita que pensamentos acelerados transformem pequenas situações em grandes problemas."
+},
+
+{
+nome: "Peixes",
+arquivo: "peixes",
+mensagem: "Os Peixes estão associados à prosperidade, aos recursos financeiros, aos negócios e à circulação de oportunidades. É um dia favorável para observar possibilidades de crescimento material e organizar melhor sua vida financeira.",
+conselho: "Valorize seus recursos e tome decisões financeiras com consciência. Prosperidade também exige responsabilidade e boa administração."
+},
+
+{
+nome: "Raposa",
+arquivo: "raposa",
+mensagem: "A Raposa representa estratégia, inteligência, cautela e observação. Nem todas as situações são exatamente aquilo que aparentam ser. Hoje será importante analisar intenções, conferir informações e evitar decisões precipitadas.",
+conselho: "Use sua inteligência antes de agir. Observe mais, fale menos e não entregue sua confiança sem conhecer as verdadeiras intenções envolvidas."
+},
+
+{
+nome: "Rato",
+arquivo: "rato",
+mensagem: "O Rato simboliza desgaste, preocupações, pequenas perdas e situações que consomem sua energia. Pode existir algo aparentemente pequeno que está tirando sua tranquilidade aos poucos. É hora de identificar o que precisa ser corrigido.",
+conselho: "Proteja sua energia, cuide dos seus recursos e resolva os pequenos problemas antes que se tornem maiores. Não carregue preocupações que não são suas."
+},
+
+{
+nome: "Rosas",
+arquivo: "rosas",
+mensagem: "As Rosas representam beleza, afeto, delicadeza, gentileza e a chegada de momentos agradáveis. Esta carta convida você a reconhecer as coisas boas da vida e a valorizar os gestos sinceros de carinho.",
+conselho: "Permita-se receber amor e também ofereça gentileza. Não deixe que experiências difíceis fechem seu coração para novas alegrias."
+},
+
+{
+nome: "Sol",
+arquivo: "sol",
+mensagem: "O Sol é uma carta de vitalidade, sucesso, clareza e conquistas. Sua energia representa iluminação depois de períodos de dúvida. O dia favorece atitudes confiantes, reconhecimento e iniciativas que estavam aguardando coragem.",
+conselho: "Acredite no seu potencial e coloque seus planos em movimento. Não esconda sua luz por medo de incomodar outras pessoas."
+},
+
+{
+nome: "Tempestade",
+arquivo: "tempestade",
+mensagem: "A Tempestade anuncia turbulências, emoções intensas e situações que podem exigir mudanças de postura. Nem sempre é possível controlar os acontecimentos, mas é possível escolher como responder a eles.",
+conselho: "Não tome decisões importantes no calor da emoção. Espere a poeira baixar, reorganize seus pensamentos e enfrente os desafios com equilíbrio."
+},
+
+{
+nome: "Torre",
+arquivo: "torre",
+mensagem: "A Torre representa estrutura, autoridade, independência e limites pessoais. Pode indicar a necessidade de se afastar de influências externas para compreender melhor seus próprios objetivos.",
+conselho: "Estabeleça limites saudáveis e respeite seu espaço. Não confunda independência com isolamento: saiba quando se preservar e quando aceitar ajuda."
+},
+
+{
+nome: "Trevo",
+arquivo: "trevo",
+mensagem: "O Trevo simboliza sorte, pequenas oportunidades, acontecimentos inesperados e alegrias passageiras. Uma situação simples pode trazer uma surpresa positiva. Esteja atento aos detalhes e não despreze oportunidades aparentemente pequenas.",
+conselho: "Aproveite as oportunidades que surgirem, mesmo que pareçam discretas. Às vezes, uma pequena abertura inicia uma grande transformação."
+},
+
+{
+nome: "Urso",
+arquivo: "urso",
+mensagem: "O Urso representa força, proteção, autoridade e poder pessoal. A carta também pode apontar para questões de dinheiro, liderança ou pessoas de personalidade dominante. Hoje será importante reconhecer sua própria capacidade de decisão.",
+conselho: "Seja firme sem ser autoritário. Proteja o que é importante para você e não permita que outras pessoas decidam o valor da sua força."
+},
+
+{
+nome: "Âncora",
+arquivo: "ancora",
+mensagem: "A Âncora simboliza estabilidade, segurança, persistência e compromisso. É uma carta que fala de construir algo duradouro, principalmente no trabalho, nos projetos e nas questões materiais.",
+conselho: "Mantenha o foco nos seus objetivos. A constância de hoje pode ser responsável por uma conquista importante amanhã."
+},
+
+{
+nome: "Anel",
+arquivo: "anel",
+mensagem: "O Anel representa alianças, compromissos, contratos, relacionamentos e acordos. Uma ligação importante pode ganhar força, ou uma situação poderá exigir que você cumpra aquilo que prometeu.",
+conselho: "Honre seus compromissos, mas também observe se existe reciprocidade. Uma parceria saudável precisa de respeito e responsabilidade dos dois lados."
+},
+
+{
+nome: "Árvore",
+arquivo: "arvore",
+mensagem: "A Árvore fala de raízes, crescimento, paciência, ancestralidade e desenvolvimento gradual. Tudo aquilo que possui uma base sólida pode continuar crescendo. Não espere resultados imediatos para reconhecer que está evoluindo.",
+conselho: "Cuide das suas raízes e fortaleça sua estrutura. Respeite seu próprio tempo e não abandone um projeto apenas porque ele está crescendo devagar."
+},
+
+{
+nome: "Cachorro",
+arquivo: "cachorro",
+mensagem: "O Cachorro representa amizade verdadeira, fidelidade, confiança e apoio. Uma pessoa leal pode estar mais próxima do que você imagina. Também é um convite para avaliar quem realmente permanece ao seu lado nos momentos difíceis.",
+conselho: "Valorize quem demonstra lealdade através de atitudes. Seja fiel aos seus princípios e não confunda palavras bonitas com amizade verdadeira."
+},
+
+{
+nome: "Caixão",
+arquivo: "caixao",
+mensagem: "O Caixão simboliza encerramentos, transformações e o fim de ciclos. Algo pode estar chegando ao seu limite, abrindo espaço para uma nova etapa. Nem todo encerramento representa uma perda: alguns são necessários para a renovação.",
+conselho: "Aceite aquilo que já não pode continuar da mesma maneira. Liberte-se do passado e permita que uma nova fase comece."
+},
+
+{
+nome: "Caminhos",
+arquivo: "caminhos",
+mensagem: "Os Caminhos representam escolhas, possibilidades e decisões que podem mudar o rumo dos acontecimentos. Talvez existam alternativas diante de você, mas a responsabilidade de escolher pertence a você.",
+conselho: "Não escolha apenas por medo de perder. Analise suas possibilidades, considere as consequências e siga a direção que mais combina com seus verdadeiros objetivos."
+},
+
+{
+nome: "Casa",
+arquivo: "casa",
+mensagem: "A Casa simboliza família, proteção, estabilidade e segurança emocional. Questões domésticas ou familiares podem ganhar destaque. A carta também lembra a importância de construir um lugar de paz dentro de si.",
+conselho: "Fortaleça seus vínculos e cuide do seu ambiente. Sua tranquilidade começa quando você aprende a proteger aquilo que realmente importa."
+},
+
+{
+nome: "Cavaleiro",
+arquivo: "cavaleiro",
+mensagem: "O Cavaleiro anuncia movimento, novidades, visitas e notícias que podem chegar inesperadamente. A energia desta carta é de iniciativa e velocidade. Uma situação parada pode finalmente começar a caminhar.",
+conselho: "Esteja preparado para agir quando a oportunidade aparecer. Receba as novidades com atenção e não deixe o medo impedir seus primeiros passos."
+},
+
+{
+nome: "Cegonha",
+arquivo: "cegonha",
+mensagem: "A Cegonha representa mudanças positivas, renovação, novidades e transições. Uma fase diferente pode estar se aproximando. A carta convida você a abandonar hábitos antigos que impedem seu desenvolvimento.",
+conselho: "Aceite a possibilidade de mudar. O novo pode causar insegurança no início, mas também pode trazer o crescimento que você estava esperando."
+},
+
+{
+nome: "Chave",
+arquivo: "chave",
+mensagem: "A Chave representa soluções, respostas, oportunidades e acontecimentos decisivos. Algo que parecia complicado pode encontrar uma saída. Esta carta fala de abertura de caminhos e da capacidade de resolver questões importantes.",
+conselho: "Não ignore as soluções que estão ao seu alcance. Confie na sua capacidade de encontrar respostas e tenha coragem para aproveitar as oportunidades."
+},
+
+{
+nome: "Chicote",
+arquivo: "chicote",
+mensagem: "O Chicote representa conflitos, discussões, repetição de padrões e tensões acumuladas. Pode ser o momento de reconhecer uma situação que continua acontecendo porque ninguém interrompe seu ciclo.",
+conselho: "Não alimente discussões desnecessárias. Identifique os padrões que se repetem e tenha coragem de agir de maneira diferente."
+},
+
+{
+nome: "Cobra",
+arquivo: "cobra",
+mensagem: "A Cobra representa inteligência, estratégia, sedução, complexidade e situações que exigem atenção. Pode apontar para rivalidades, ciúmes ou caminhos indiretos. A carta pede discernimento diante de pessoas e circunstâncias complicadas.",
+conselho: "Não aja por impulso e não revele todos os seus planos. Observe os acontecimentos com inteligência e preserve seus limites."
+},
+
+{
+nome: "Coração",
+arquivo: "coracao",
+mensagem: "O Coração simboliza amor, paixão, afeto, generosidade e sentimentos verdadeiros. Relacionamentos e questões emocionais podem ganhar destaque. Também é um convite para fazer aquilo que traz alegria e significado à sua vida.",
+conselho: "Demonstre seus sentimentos com sinceridade, mas não abandone seu amor-próprio para conquistar o amor de alguém."
+},
+
+{
+nome: "Criança",
+arquivo: "crianca",
+mensagem: "A Criança representa novos começos, espontaneidade, descobertas e inocência. Uma oportunidade pode surgir em sua fase inicial. A carta também convida você a olhar para determinadas situações com mais leveza e curiosidade.",
+conselho: "Permita-se começar novamente. Não exija perfeição no primeiro passo: todo grande caminho começa com uma pequena iniciativa."
+},
+
+{
+nome: "Cruz",
+arquivo: "cruz",
+mensagem: "A Cruz simboliza responsabilidades, provações, fé e aprendizados profundos. Pode representar um período de maior exigência emocional, mas também a oportunidade de compreender o significado das experiências que você atravessa.",
+conselho: "Não carregue sozinho aquilo que pode ser compartilhado. Mantenha sua fé, respeite seus limites e procure transformar dificuldades em aprendizado."
+},
+
+{
+nome: "Envelope",
+arquivo: "envelope",
+mensagem: "O Envelope representa mensagens, documentos, comunicações e informações importantes. Uma notícia, resposta ou conversa pode trazer esclarecimentos. Também é uma carta favorável para organizar papéis e resolver assuntos pendentes.",
+conselho: "Preste atenção ao que chega até você. Leia com cuidado, confirme as informações e escolha bem as palavras antes de responder."
+},
+
+{
+nome: "Estrela",
+arquivo: "estrela",
+mensagem: "A Estrela representa esperança, inspiração, proteção espiritual, fé e orientação. É uma carta de confiança no futuro e de reconexão com seus objetivos. Mesmo que ainda existam dúvidas, existe um caminho que merece ser seguido.",
+conselho: "Não abandone seus sonhos por causa de uma dificuldade momentânea. Mantenha sua esperança, mas transforme seus desejos em atitudes concretas."
+},
+
+{
+nome: "Foice",
+arquivo: "foice",
+mensagem: "A Foice representa cortes, decisões rápidas, mudanças repentinas e necessidade de eliminar aquilo que não serve mais. Uma situação pode exigir posicionamento firme. A carta também aconselha cuidado com atitudes precipitadas.",
+conselho: "Tenha coragem para encerrar o que precisa terminar, mas pense antes de agir. Um corte consciente pode evitar muitos desgastes futuros."
+},
+
+{
+nome: "Homem",
+arquivo: "homem",
+mensagem: "A carta do Homem representa uma figura masculina importante, iniciativa, postura e energia de ação. Pode indicar um homem que terá influência nos acontecimentos ou a necessidade de assumir uma posição mais ativa diante de uma situação.",
+conselho: "Observe as atitudes das pessoas e assuma a responsabilidade pelas suas escolhas. A firmeza deve caminhar junto com o respeito e a honestidade."
+}
+
+];
+
+
+/* ===================================
+   SORTEIO DIÁRIO
+=================================== */
+
+const chaveData = "portalMagoData";
+const chaveCarta = "portalMagoCarta";
+const chaveHistorico = "portalMagoHistorico";
+
+let cartaDoDia;
+let revelada = false;
+
+
+/* DATA LOCAL */
+
+function dataAtual() {
+
+    const agora = new Date();
+
+    const ano = agora.getFullYear();
+    const mes = String(agora.getMonth() + 1).padStart(2, "0");
+    const dia = String(agora.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
+}
+
+
+/* ESCOLHER UMA CARTA */
+
+function sortearCarta() {
+
+    let historico = [];
+
+    try {
+        historico = JSON.parse(
+            localStorage.getItem(chaveHistorico)
+        ) || [];
+    } catch(e) {
+        historico = [];
+    }
+
+    /* Evita repetição até completar as 36 */
+
+    let disponiveis = cartas.filter(
+        carta => !historico.includes(carta.arquivo)
+    );
+
+    /* Quando todas saírem, começa novo ciclo */
+
+    if (disponiveis.length === 0) {
+        historico = [];
+        disponiveis = [...cartas];
+    }
+
+    const indice = Math.floor(
+        Math.random() * disponiveis.length
+    );
+
+    const escolhida = disponiveis[indice];
+
+    historico.push(escolhida.arquivo);
+
+    localStorage.setItem(
+        chaveHistorico,
+        JSON.stringify(historico)
+    );
+
+    return escolhida;
+}
+
+
+/* CARREGAR A CARTA DO DIA */
+
+function carregarCartaDoDia() {
+
+    const hoje = dataAtual();
+
+    const dataSalva = localStorage.getItem(chaveData);
+
+    const cartaSalva = localStorage.getItem(chaveCarta);
+
+    if (dataSalva === hoje && cartaSalva) {
+
+        cartaDoDia = cartas.find(
+            c => c.arquivo === cartaSalva
+        );
+
+    }
+
+    if (!cartaDoDia) {
+
+        cartaDoDia = sortearCarta();
+
+        localStorage.setItem(chaveData, hoje);
+
+        localStorage.setItem(
+            chaveCarta,
+            cartaDoDia.arquivo
+        );
+
+    }
+
+}
+
+
+/* ===================================
+   CARREGAMENTO DE IMAGENS
+=================================== */
+
+function carregarImagem(elemento, nome) {
+
+    let tentativa = 0;
+
+    function tentar() {
+
+        if (tentativa >= extensoes.length) {
+
+            elemento.alt = "Imagem não encontrada: " + nome;
+
+            console.error(
+                "Imagem não encontrada:",
+                nome
+            );
+
+            return;
+        }
+
+        elemento.src =
+            pastaCartas +
+            nome +
+            extensoes[tentativa];
+
+        tentativa++;
+
+    }
+
+    elemento.onerror = tentar;
+
+    tentar();
+
+}
+
+
+/* ===================================
+   REVELAR CARTA
+=================================== */
+
+function revelarCarta() {
+
+    if (revelada) return;
+
+    revelada = true;
+
+    document.getElementById("carta")
+        .classList.add("virada");
+
+    document.getElementById("instrucao")
+        .textContent = "A mensagem da sua carta de hoje:";
+
+    document.getElementById("botao")
+        .style.display = "none";
+
+    document.getElementById("areaCarta")
+        .style.cursor = "default";
+
+    document.getElementById("nomeCarta")
+        .textContent = cartaDoDia.nome;
+
+    document.getElementById("mensagem")
+        .textContent = cartaDoDia.mensagem;
+
+    document.getElementById("conselho")
+        .textContent = cartaDoDia.conselho;
+
+    document.getElementById("data")
+        .textContent =
+        "Carta sorteada em " +
+        new Date().toLocaleDateString("pt-BR");
+
+    setTimeout(() => {
+
+        document.getElementById("resultado")
+            .style.display = "block";
+
+        document.getElementById("resultado")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+    }, 700);
+
+}
+
+
+/* ===================================
+   INICIALIZAÇÃO
+=================================== */
+
+function iniciarPortal() {
+
+    carregarCartaDoDia();
+
+    /* Mostra o verso */
+
+    carregarImagem(
+        document.getElementById("imagemVerso"),
+        "back"
+    );
+
+    /* Prepara a carta sorteada */
+
+    carregarImagem(
+        document.getElementById("imagemFrente"),
+        cartaDoDia.arquivo
+    );
+
+}
+
+iniciarPortal();
+
+</script>
+
+</body>
+</html>
