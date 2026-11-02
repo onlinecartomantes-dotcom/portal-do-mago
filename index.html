@@ -129,7 +129,7 @@ header .subtitulo {
     transform: rotateY(180deg);
 }
 
-/* BOTÃO */
+/* BOTÃO REVELAR */
 
 .botao {
     display: inline-block;
@@ -211,6 +211,85 @@ header .subtitulo {
     text-align: center;
 }
 
+/* BOTÃO CARTOMANTES ONLINE */
+
+.area-consulta {
+    width: 100%;
+    max-width: 500px;
+    margin: 25px auto 35px;
+    padding: 0 18px;
+    text-align: center;
+}
+
+.texto-consulta {
+    color: #f5dfaa;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.botao-consulta {
+    display: block;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 19px 15px;
+    border-radius: 50px;
+    border: 2px solid #ffe6a0;
+    color: #241304;
+    background: linear-gradient(135deg, #fff0ad, #e8bd62, #bd812c);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: bold;
+    letter-spacing: .5px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow:
+        0 0 12px rgba(232,189,98,.8),
+        0 0 25px rgba(232,189,98,.5);
+    animation: pulsarConsulta 1.6s infinite;
+    transition: transform .3s, box-shadow .3s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.botao-consulta:hover {
+    transform: scale(1.04);
+    box-shadow:
+        0 0 18px #ffe6a0,
+        0 0 35px rgba(232,189,98,.8);
+}
+
+.botao-consulta:active {
+    transform: scale(.97);
+}
+
+@keyframes pulsarConsulta {
+    0% {
+        box-shadow:
+            0 0 8px rgba(232,189,98,.5),
+            0 0 15px rgba(232,189,98,.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 18px rgba(255,220,130,1),
+            0 0 35px rgba(232,189,98,.8);
+    }
+
+    100% {
+        box-shadow:
+            0 0 8px rgba(232,189,98,.5),
+            0 0 15px rgba(232,189,98,.3);
+    }
+}
+
+.aviso-consulta {
+    color: #cdb88e;
+    font-size: 13px;
+    margin-top: 13px;
+    line-height: 1.5;
+}
+
 /* RODAPÉ */
 
 footer {
@@ -283,6 +362,16 @@ footer {
     .conselho {
         font-size: 16px;
     }
+
+    .area-consulta {
+        margin-top: 22px;
+        padding: 0 14px;
+    }
+
+    .botao-consulta {
+        padding: 17px 12px;
+        font-size: 16px;
+    }
 }
 </style>
 </head>
@@ -350,6 +439,30 @@ footer {
 <div id="widget-horoscopo">
     <script async src="https://widget.horoscopovirtual.com.br/js/horoscopo.js?background=080707&color=e8bd62&border=e8bd62&text=e8bd62&font=roboto"></script>
 </div>
+
+<!-- BOTÃO DE CONSULTA CARTOMANTES ONLINE -->
+
+<section class="area-consulta">
+
+    <p class="texto-consulta">
+        🔮 Quer uma orientação mais pessoal?
+        Faça sua consulta com nossos profissionais!
+    </p>
+
+    <a
+        class="botao-consulta"
+        href="https://onlinecartomantes-dotcom.github.io/aplicativo/index.html"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        ✨ SE CONSULTAR AGORA POR APENAS R$ 1,99 ✨
+    </a>
+
+    <p class="aviso-consulta">
+        Acesse o Cartomantes Online e conheça nossos serviços.
+    </p>
+
+</section>
 
 <footer>
     ✦ PORTAL DO MAGO ✦
