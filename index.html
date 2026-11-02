@@ -10,70 +10,115 @@
 <meta name="description" content="Portal do Mago - Descubra sua carta do dia e receba uma mensagem e um conselho especial.">
 
 <style>
+:root {
+    --ouro: #e8bd62;
+    --ouro-escuro: #bd9146;
+    --texto: #f5dfaa;
+    --fundo: #080707;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     min-height: 100vh;
-    background: radial-gradient(ellipse at top, #38200f 0%, #160e0b 45%, #080707 100%);
-    color: #f5dfaa;
+    min-height: 100svh;
+    background: radial-gradient(
+        ellipse at top,
+        #38200f 0%,
+        #160e0b 45%,
+        #080707 100%
+    );
+    color: var(--texto);
     font-family: Georgia, 'Times New Roman', serif;
     text-align: center;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* CABEÇALHO */
+
 header {
-    padding: 35px 15px 15px;
+    width: 100%;
+    padding: clamp(20px, 4vh, 34px) 14px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header h1 {
-    color: #e8bd62;
-    font-size: clamp(30px, 7vw, 55px);
-    letter-spacing: 5px;
-    text-shadow: 0 0 15px #b77a24;
+    width: 100%;
+    max-width: 680px;
+    color: var(--ouro);
+    font-size: clamp(21px, 6vw, 43px);
+    line-height: 1.15;
+    letter-spacing: clamp(1px, .55vw, 3px);
+    white-space: nowrap;
+    text-align: center;
+    text-shadow: 0 0 13px rgba(183,122,36,.65);
 }
 
 header .subtitulo {
-    margin-top: 12px;
-    font-size: clamp(17px, 4vw, 25px);
-    letter-spacing: 4px;
+    margin-top: 10px;
+    font-size: clamp(14px, 3.8vw, 22px);
+    line-height: 1.3;
+    letter-spacing: clamp(2px, .8vw, 4px);
     color: #fff0c5;
+    text-align: center;
 }
 
 .linha {
-    width: 180px;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #d6a54e, transparent);
-    margin: 23px auto;
+    width: min(150px, 45vw);
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        #d6a54e,
+        transparent
+    );
+    margin: 17px auto 8px;
 }
+
+/* CONTEÚDO */
 
 .container {
     width: 100%;
     max-width: 700px;
-    margin: auto;
-    padding: 10px 18px 40px;
+    margin: 0 auto;
+    padding: 8px 18px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .instrucao {
-    font-size: 17px;
+    width: 100%;
+    max-width: 540px;
+    font-size: clamp(14px, 3.7vw, 17px);
     color: #e6c98f;
-    margin: 12px 0 25px;
-    line-height: 1.6;
+    margin: 8px auto 18px;
+    line-height: 1.55;
+    text-align: center;
 }
 
-/* CARTA */
+/* CARTA RESPONSIVA */
 
 .area-carta {
     perspective: 1200px;
-    width: min(76vw, 290px);
-    height: min(112vw, 440px);
-    max-height: 440px;
-    margin: 0 auto 25px;
+    width: clamp(190px, 62vw, 270px);
+    aspect-ratio: 2 / 3;
+    height: auto;
+    margin: 0 auto 20px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    flex: 0 0 auto;
 }
 
 .carta {
@@ -97,8 +142,10 @@ header .subtitulo {
     -webkit-backface-visibility: hidden;
     border-radius: 12px;
     overflow: hidden;
-    border: 2px solid #bd9146;
-    box-shadow: 0 0 15px #c28a32, 0 0 35px rgba(189,145,70,.25);
+    border: 2px solid var(--ouro-escuro);
+    box-shadow:
+        0 0 13px rgba(194,138,50,.75),
+        0 0 30px rgba(189,145,70,.22);
     background: #17100c;
 }
 
@@ -116,71 +163,83 @@ header .subtitulo {
 /* BOTÃO */
 
 .botao {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
     border: 1px solid #d5a84f;
-    padding: 13px 30px;
+    padding: 12px 24px;
     border-radius: 30px;
     color: #ffe2a2;
     background: linear-gradient(135deg, #75451c, #241309);
-    font-size: 16px;
+    font-size: clamp(13px, 3.5vw, 16px);
     font-family: Georgia, serif;
     cursor: pointer;
     box-shadow: 0 0 15px rgba(215,167,74,.25);
     transition: .3s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .botao:hover {
     background: linear-gradient(135deg, #a66c29, #4b260e);
     box-shadow: 0 0 22px #b77a24;
-    transform: scale(1.04);
+    transform: scale(1.03);
 }
 
 /* RESULTADO */
 
 .resultado {
     display: none;
-    margin: 28px auto 0;
-    padding: 25px 20px;
+    width: 100%;
+    margin: 24px auto 0;
+    padding: 23px 20px;
     border: 1px solid rgba(212,169,91,.65);
     border-radius: 14px;
-    background: rgba(24,14,9,.85);
+    background: rgba(24,14,9,.88);
     box-shadow: 0 0 25px rgba(192,133,43,.15);
     animation: aparecer 1s ease;
+    text-align: center;
 }
 
 .resultado h2 {
-    color: #e8bd62;
-    font-size: 30px;
-    margin-bottom: 17px;
+    color: var(--ouro);
+    font-size: clamp(23px, 6vw, 30px);
+    line-height: 1.2;
+    margin-bottom: 14px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    text-align: center;
 }
 
 .resultado .mensagem {
     color: #fff0d0;
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 20px;
+    font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.75;
+    margin-bottom: 18px;
+    text-align: center;
 }
 
 .conselho {
     border-top: 1px solid #92703b;
-    padding-top: 18px;
+    padding-top: 16px;
     color: #eac779;
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.75;
+    text-align: center;
 }
 
 .conselho strong {
     display: block;
     margin-bottom: 8px;
-    font-size: 19px;
+    font-size: clamp(16px, 4vw, 19px);
+    text-align: center;
 }
 
 .data {
-    font-size: 13px;
+    font-size: 12px;
     color: #bda77f;
-    margin-top: 20px;
+    margin-top: 17px;
+    text-align: center;
 }
 
 /* HORÓSCOPO VIRTUAL */
@@ -190,24 +249,28 @@ header .subtitulo {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto 18px;
-    padding: 0 12px;
+    margin: 0 auto 12px;
+    padding: 0 10px;
     text-align: center;
+    overflow: hidden;
 }
 
 /* RODAPÉ */
 
 footer {
-    padding: 25px 15px;
+    padding: 20px 15px 26px;
     color: #a68a5e;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 1px;
+    text-align: center;
 }
+
+/* ANIMAÇÃO */
 
 @keyframes aparecer {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(16px);
     }
     to {
         opacity: 1;
@@ -215,45 +278,84 @@ footer {
     }
 }
 
-/* CELULAR */
+/* CELULARES PEQUENOS */
 
-@media(max-width: 480px) {
+@media (max-width: 380px) {
+
     header {
-        padding-top: 28px;
+        padding-top: 18px;
     }
 
     header h1 {
-        letter-spacing: 3px;
+        font-size: clamp(19px, 5.8vw, 22px);
+        letter-spacing: 1px;
+    }
+
+    header .subtitulo {
+        margin-top: 8px;
+        font-size: 14px;
+    }
+
+    .linha {
+        margin: 13px auto 5px;
     }
 
     .container {
-        padding-left: 14px;
-        padding-right: 14px;
+        padding: 6px 13px 26px;
     }
 
     .instrucao {
-        font-size: 15px;
+        margin: 7px auto 15px;
+        font-size: 14px;
+    }
+
+    .area-carta {
+        width: min(61vw, 225px);
+        margin-bottom: 17px;
     }
 
     .resultado {
-        padding: 20px 15px;
-    }
-
-    .resultado h2 {
-        font-size: 25px;
-    }
-
-    .resultado .mensagem,
-    .conselho {
-        font-size: 16px;
+        padding: 19px 14px;
     }
 }
+
+/* TABLETS E COMPUTADORES */
+
+@media (min-width: 700px) {
+
+    header {
+        padding-top: 35px;
+    }
+
+    .container {
+        padding-top: 14px;
+    }
+
+    .area-carta {
+        width: 260px;
+    }
+}
+
+/* REDUZ MOVIMENTO */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- CABEÇALHO -->
+
 <header>
+
     <h1>✦ PORTAL DO MAGO ✦</h1>
 
     <div class="subtitulo">
@@ -261,7 +363,10 @@ footer {
     </div>
 
     <div class="linha"></div>
+
 </header>
+
+<!-- CARTA DO DIA -->
 
 <main class="container">
 
@@ -277,20 +382,25 @@ footer {
         <div class="carta" id="carta">
 
             <div class="lado verso">
-                <img id="imagemVerso" alt="Verso da carta">
+                <img id="imagemVerso"
+                     alt="Verso da carta">
             </div>
 
             <div class="lado frente">
-                <img id="imagemFrente" alt="Carta sorteada">
+                <img id="imagemFrente"
+                     alt="Carta sorteada">
             </div>
 
         </div>
+
     </div>
 
     <button class="botao" id="botao"
             onclick="revelarCarta()">
         ✨ REVELAR MINHA CARTA ✨
     </button>
+
+    <!-- RESULTADO -->
 
     <section class="resultado" id="resultado">
 
@@ -312,8 +422,12 @@ footer {
 <!-- HORÓSCOPO VIRTUAL -->
 
 <div id="widget-horoscopo">
+
     <script async src="https://widget.horoscopovirtual.com.br/js/horoscopo.js?background=080707&color=e8bd62&border=e8bd62&text=e8bd62&font=roboto"></script>
+
 </div>
+
+<!-- RODAPÉ -->
 
 <footer>
     ✦ PORTAL DO MAGO ✦
@@ -326,11 +440,6 @@ footer {
 /* ===================================
    IMAGENS NA RAIZ DO GITHUB
 =================================== */
-
-/* IMPORTANTE:
-   Não existe mais a pasta cartas/.
-   Todas as imagens estão junto do index.html.
-*/
 
 const pastaCartas = "";
 
@@ -643,9 +752,13 @@ function sortearCarta() {
         historico = [];
     }
 
+    /* Evita repetição até completar as 36 */
+
     let disponiveis = cartas.filter(
         carta => !historico.includes(carta.arquivo)
     );
+
+    /* Quando todas saírem, começa novo ciclo */
 
     if (disponiveis.length === 0) {
         historico = [];
@@ -800,7 +913,7 @@ function iniciarPortal() {
 
     carregarCartaDoDia();
 
-    /* Mostra o verso da carta */
+    /* Mostra o verso */
 
     carregarImagem(
         document.getElementById("imagemVerso"),
